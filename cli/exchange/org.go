@@ -65,13 +65,13 @@ func OrgCreate(org, userPwCreds, theOrg string, label string, desc string, min i
 	// check constraints on min, max, amnd adjust
 	// if any negative values for heartbeat, throw error
 	negFlags := []string{}
-	if min <= 0 {
+	if min < 0 {
 		negFlags = append(negFlags, "--heartbeatmin")
 	}
-	if max <= 0 {
+	if max < 0 {
 		negFlags = append(negFlags, "--hearbeatmax")
 	}
-	if adjust <= 0 {
+	if adjust < 0 {
 		negFlags = append(negFlags, "--heartbeatadjust")
 	}
 
@@ -83,7 +83,7 @@ func OrgCreate(org, userPwCreds, theOrg string, label string, desc string, min i
 		}
 
 		negatives = negatives[1:len(negatives)]
-		cliutils.Fatal(cliutils.CLI_INPUT_ERROR, i18n.GetMessagePrinter().Sprintf("Invalid input for %v. Only positive integers are allowed.", negatives))
+		cliutils.Fatal(cliutils.CLI_INPUT_ERROR, i18n.GetMessagePrinter().Sprintf("Invalid input for %v. Only non-negative integers are allowed.", negatives))
 	}
 
 	// if min is not less than or equal to max, throw error
@@ -134,13 +134,13 @@ func OrgUpdate(org, userPwCreds, theOrg string, label string, desc string, min i
 		// check constraints
 		// if any negative values for heartbeat, throw error
 		negFlags := []string{}
-		if min <= 0 {
+		if min < 0 {
 			negFlags = append(negFlags, "--heartbeatmin")
 		}
-		if max <= 0 {
+		if max < 0 {
 			negFlags = append(negFlags, "--hearbeatmax")
 		}
-		if adjust <= 0 {
+		if adjust < 0 {
 			negFlags = append(negFlags, "--heartbeatadjust")
 		}
 
@@ -152,7 +152,7 @@ func OrgUpdate(org, userPwCreds, theOrg string, label string, desc string, min i
 			}
 
 			negatives = negatives[1:len(negatives)]
-			cliutils.Fatal(cliutils.CLI_INPUT_ERROR, i18n.GetMessagePrinter().Sprintf("Invalid input for %v. Only positive integers are allowed.", negatives))
+			cliutils.Fatal(cliutils.CLI_INPUT_ERROR, i18n.GetMessagePrinter().Sprintf("Invalid input for %v. Only non-negative integers are allowed.", negatives))
 		}
 
 		// if min is not less than or equal to max, throw error
